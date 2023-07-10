@@ -12,7 +12,9 @@ const Home = ({ videos }: Props) => {
   return (
     <div className="flex flex-col gap-10 videos h-full">
       {videos.length ? (
-        videos.map((video, i) => <VideoCard post={video} key={i} />)
+        videos?.map((video: Video, i) => (
+          <VideoCard post={video} isShowingOnHome key={i} />
+        ))
       ) : (
         <NoResult text="NO Videos" />
       )}
