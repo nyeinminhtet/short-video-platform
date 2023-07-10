@@ -74,6 +74,12 @@ const Upload = () => {
       router.push("/");
     }
   };
+  const handleDiscard = () => {
+    setSavingPost(false);
+    setVideoAsset(undefined);
+    setCaption("");
+    setTopic("");
+  };
 
   return (
     <div className="flex w-full border-t-2 h-full absolute left-0 top-[40px] sm:top-[60px] mb-10 pt-10 lg:pt-20 bg-white justify-center">
@@ -135,7 +141,7 @@ const Upload = () => {
                       loop
                       src={videoAsset.url}
                     />
-                    <div className=" flex justify-between gap-20">
+                    <div className=" flex justify-between gap-20 bg-primary rounded-sm p-1 border-2 border-gray-200">
                       <p className="text-lg">{videoAsset.originalFilename}</p>
                       <button
                         type="button"
@@ -156,7 +162,7 @@ const Upload = () => {
             </p>
           )}
         </div>
-        <div className="flex flex-col gap-3 pb-10">
+        <div className="flex flex-col gap-3 mt-[4rem] pb-10">
           <label className="text-md font-medium ">Caption</label>
           <input
             type="text"
@@ -184,7 +190,7 @@ const Upload = () => {
           </select>
           <div className="flex gap-6 mt-10">
             <button
-              //   onClick={handleDiscard}
+              onClick={handleDiscard}
               type="button"
               className="border-gray-300 border-2 text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
             >
@@ -197,7 +203,7 @@ const Upload = () => {
               className="bg-[#F51997] text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
             >
               Post
-              {/* {savingPost ? "Posting..." : "Post"} */}
+              {savingPost ? "Posting..." : "Post"}
             </button>
           </div>
         </div>

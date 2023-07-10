@@ -14,7 +14,7 @@ const SuggestedAccount = () => {
 
   return (
     <div className=" xl:border-b-2 border-gray-300 pb-4">
-      <p className=" font-semibold text-gray-500 m-3 mt-4 hidden xl:block">
+      <p className=" font-semibold text-gray-500 m-3 mt-2 hidden xl:block">
         Suggested Accounts
       </p>
 

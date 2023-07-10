@@ -14,13 +14,12 @@ export const topics = [
     icon: <PiMusicNoteFill />,
   },
   {
-    name: "coding",
-    icon: <BsCode />,
-  },
-
-  {
     name: "comedy",
     icon: <BsEmojiSunglasses />,
+  },
+  {
+    name: "coding",
+    icon: <BsCode />,
   },
   {
     name: "gaming",
@@ -29,10 +28,6 @@ export const topics = [
   {
     name: "food",
     icon: <GiCakeSlice />,
-  },
-  {
-    name: "beauty",
-    icon: <GiLipstick />,
   },
   {
     name: "animals",
