@@ -27,11 +27,10 @@ export const getServerSideProps = async ({
 }: {
   query: { topic: string };
 }) => {
-  let response = null;
+  let response = await axios.get(`${config.apiUrl}/api/post`);
+
   if (topic) {
     response = await axios.get(`${config.apiUrl}/api/discover/${topic}`);
-  } else {
-    response = await axios.get(`${config.apiUrl}/api/post`);
   }
 
   return {
