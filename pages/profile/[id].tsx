@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { VscVerifiedFilled } from "react-icons/vsc";
 import Image from "next/image";
 import axios from "axios";
-import VideoCard from "@/components/VideoCard";
 import NoResult from "@/components/NoResult";
 import { IUser, Video } from "@/types";
 import { config } from "@/config/config";
+import VideoCard from "@/components/VideoCard";
 
 interface Props {
   data: {

@@ -2,8 +2,8 @@ import { MouseEvent, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { config } from "@/config/config";
 import { Video } from "@/types";
-import VideoCard from "@/components/VideoCard";
 import NoResult from "@/components/NoResult";
+import VideoCard from "@/components/VideoCard";
 
 interface Props {
   videos: Video[];
