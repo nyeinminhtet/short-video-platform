@@ -1,14 +1,17 @@
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { config } from "@/config/config";
 import { Video } from "@/types";
-import VideoCard from "@/components/VideoCard";
+import VideoCard from "@/components/videos/VideoCard";
 import NoResult from "@/components/NoResult";
 
 interface Props {
   videos: Video[];
 }
 
-const Home = ({ videos }: Props) => {
+let initialRender = true;
+
+export default function Home({ videos }: Props) {
   return (
     <div className="flex flex-col gap-10 videos h-full">
       {videos.length ? (
@@ -20,7 +23,7 @@ const Home = ({ videos }: Props) => {
       )}
     </div>
   );
-};
+}
 
 export const getServerSideProps = async ({
   query: { topic },
@@ -39,5 +42,3 @@ export const getServerSideProps = async ({
     },
   };
 };
-
-export default Home;

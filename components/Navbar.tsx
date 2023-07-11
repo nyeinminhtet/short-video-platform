@@ -95,6 +95,9 @@ const Navbar = () => {
         ) : (
           <GoogleLogin
             onSuccess={(response) => createOrGetUser(response, addUser)}
+            text="signin"
+            size="medium"
+            shape="pill"
             onError={() => console.log("Login Failed!")}
           />
         )}
