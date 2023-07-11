@@ -31,61 +31,63 @@ const CommentButton = ({
   const { userProfile, allUsers } = useAuthStore();
 
   return (
-    <div className=" border-t-2 border-gray-200 pt-4 px-10 bg-[#F8F8F8] border-b-2 lg:pb:-0 pb-[100px]">
-      <div className=" overflow-scroll lg:h-[220px] w-[70vh]">
-        {comments?.length ? (
-          comments.map((comment, index) => (
-            <>
-              {allUsers.map(
-                (user: IUser) =>
-                  user._id ===
-                    (comment.postedBy._id || comment.postedBy._ref) && (
-                    <div key={index} className=" p-2 items-center">
-                      <Link href={`/profile/${user._id}`}>
-                        <div className="flex gap-3 items-start">
-                          <div className=" w-8 h-8">
-                            <Image
-                              width={34}
-                              height={34}
-                              src={user.image}
-                              alt="user profile"
-                              className=" rounded-full"
-                            />
-                          </div>
+    <div className=" flex flex-col w-full max-w-3xl mx-auto pt-2 lg:pt-0 lg:w-[500px] h-auto lg:h-screen border-t lg:border-l  lg:border-l-gray-300">
+      <div>
+        <div className=" flex-1 max-h-[300px] lg:max-h-[400px] p-4 lg:p-6 overflow-hidden overflow-y-auto">
+          {comments?.length ? (
+            comments.map((comment, index) => (
+              <>
+                {allUsers.map(
+                  (user: IUser) =>
+                    user._id ===
+                      (comment.postedBy._id || comment.postedBy._ref) && (
+                      <div key={index} className=" p-2 items-center">
+                        <Link href={`/profile/${user._id}`}>
+                          <div className="flex gap-3 items-start">
+                            <div className=" w-8 h-8">
+                              <Image
+                                width={34}
+                                height={34}
+                                src={user.image}
+                                alt="user profile"
+                                className=" rounded-full"
+                              />
+                            </div>
 
-                          <div className="">
-                            <p className=" flex gap-1 items-center text-md font-bold text-primary lowercase">
-                              {user.userName.replaceAll(" ", "")}{" "}
-                              <VscVerifiedFilled className=" text-blue-400" />
-                            </p>
+                            <div className="">
+                              <p className=" flex gap-1 items-center text-md font-bold text-primary lowercase">
+                                {user.userName.replaceAll(" ", "")}{" "}
+                                <VscVerifiedFilled className=" text-blue-400" />
+                              </p>
+                            </div>
                           </div>
+                        </Link>
+
+                        <div className=" mt-2 bg-primary w-fit py-3 px-3 rounded-md">
+                          <p>{comment.comment}</p>
                         </div>
-                      </Link>
-
-                      <div className=" mt-2 bg-primary w-fit py-3 px-3 rounded-md">
-                        <p>{comment.comment}</p>
                       </div>
-                    </div>
-                  )
-              )}
-            </>
-          ))
-        ) : (
-          <NoResult text="No comments yet" />
-        )}
+                    )
+                )}
+              </>
+            ))
+          ) : (
+            <NoResult text="No comments yet" />
+          )}
+        </div>
 
         {userProfile && (
-          <div className=" absolute right-0 bottom-0 left-0 pb-6 px-2 md:px-10">
-            <form className="flex gap-4" onSubmit={addComment}>
+          <div className="w-full p-4 lg:px-6 py-10 border-t dark:border-t-darkBorder">
+            <form className="w-full flex items-center" onSubmit={addComment}>
               <input
                 type="text"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 placeholder={`Add comment as ${userProfile.userName}`}
-                className=" bg-primary px-6 py-4 text-md font-medium border-2 w-[250px] md:w-[700px] lg:w-[350px] border-gray-100 focus:outline-none focus:border-2 focus:border-gray-300 flex-1 rounded-lg"
+                className=" flex-1 min-w-0 bg-gray-200 dark:bg-darkSecondary border-none outline-none p-2 pl-4 rounded-lg caret-primary"
               />
               <button
-                className=" text-md text-gray-400 bg-gray-200 px-4 py-0 hover:bg-white hover:font-bold hover:text-black rounded-md"
+                className=" py-2 pl-3 disabled:text-gray-400 dark:disabled:text-gray-600 text-primary font-semibold disabled:cursor-not-allowed"
                 onClick={addComment}
               >
                 {isPostingComment ? "Commenting..." : "Comment"}

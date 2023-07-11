@@ -4,6 +4,7 @@ import { config } from "@/config/config";
 import { Video } from "@/types";
 import NoResult from "@/components/NoResult";
 import VideoCard from "@/components/VideoCard";
+import Layout from "@/components/Layout";
 
 interface Props {
   videos: Video[];
@@ -13,15 +14,17 @@ let initialRender = true;
 
 export default function Home({ videos }: Props) {
   return (
-    <div className="flex flex-col gap-10 videos h-full">
-      {videos.length ? (
-        videos?.map((video: Video, i) => (
-          <VideoCard post={video} isShowingOnHome key={i} />
-        ))
-      ) : (
-        <NoResult text="NO Videos" />
-      )}
-    </div>
+    <Layout>
+      <div className="flex flex-col gap-10 sm:ml-20 ml-5 videos h-full">
+        {videos.length ? (
+          videos?.map((video: Video, i) => (
+            <VideoCard post={video} isShowingOnHome key={i} />
+          ))
+        ) : (
+          <NoResult text="NO Videos" />
+        )}
+      </div>
+    </Layout>
   );
 }
 

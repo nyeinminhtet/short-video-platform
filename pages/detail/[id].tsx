@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { VscVerifiedFilled } from "react-icons/vsc";
 import { MdOutlineCancel } from "react-icons/md";
+import { RxCross2 } from "react-icons/rx";
 import { BsFillPlayFill } from "react-icons/bs";
 import { HiVolumeOff, HiVolumeUp } from "react-icons/hi";
 import axios from "axios";
@@ -27,23 +28,7 @@ const Detail = ({ postDetails }: Props) => {
   const [comment, setComment] = useState("");
   const [isPostingcomment, setIsPostingcomment] = useState(false);
 
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const onVideoClick = () => {
-    if (playing) {
-      videoRef?.current?.pause();
-      setPlaying(false);
-    } else {
-      videoRef?.current?.play();
-      setPlaying(true);
-    }
-  };
-
-  useEffect(() => {
-    if (post && videoRef.current) {
-      videoRef.current.muted = isVideoMuted;
-    }
-  }, [isVideoMuted, post]);
+  useEffect(() => window.scrollTo(0, 0), []);
 
   const handleLike = async (like: boolean) => {
     if (userProfile) {
@@ -78,148 +63,36 @@ const Detail = ({ postDetails }: Props) => {
 
   if (!post) return null;
 
-  // return (
-  //   <div className=" flex w-[100vh] sm:w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap ">
-  //     <div className=" relative flex-2 w-[1200px] lg:w-9/12 flex justify-center mt-10 sm:mt-0 items-center bg-black">
-  //       <div className=" absolute top-6 left-2 lg:left-6 flex gap-6 z-50">
-  //         <p onClick={() => router.back()}>
-  //           <MdOutlineCancel className=" text-white text-[35px] cursor-pointer" />
-  //         </p>
-  //       </div>
-  //       <div className=" relative">
-  //         <div className=" lg:h-[100vh] h-[60vh]">
-  //           <video
-  //             onClick={onVideoClick}
-  //             ref={videoRef}
-  //             loop
-  //             src={post.video.asset.url}
-  //             className=" h-full"
-  //           ></video>
-  //         </div>
-
-  //         <div className=" absolute top-[45%] left-[45%]">
-  //           {!playing && (
-  //             <button onClick={onVideoClick}>
-  //               <BsFillPlayFill className=" text-white text-6xl lg:text-8xl" />
-  //             </button>
-  //           )}
-  //         </div>
-  //       </div>
-
-  //       <div className=" absolute bottom-5 lg:bottom-10 right-5 lg:right-10 cursor-pointer">
-  //         {isVideoMuted ? (
-  //           <button onClick={() => setIsVideoMuted(false)}>
-  //             <HiVolumeOff className="text-2xl text-white lg:text-3xl" />
-  //           </button>
-  //         ) : (
-  //           <button onClick={() => setIsVideoMuted(true)}>
-  //             <HiVolumeUp className="text-2xl text-white lg:text-3xl" />
-  //           </button>
-  //         )}
-  //       </div>
-  //     </div>
-  //     <div className=" relative w-[1000px] md:w-[900px] lg:w-[700px]">
-  //       <div className=" lg:mt-10 mt-5">
-  //         <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded">
-  //           <div className="md:w-10 md:h-10 w-12 h-12 ml-4">
-  //             <Link href={`/profile/${userProfile._id}`}>
-  //               <>
-  //                 <Image
-  //                   width={35}
-  //                   height={35}
-  //                   alt="profile"
-  //                   src={post.postedBy.image}
-  //                   className=" rounded-full"
-  //                 />
-  //               </>
-  //             </Link>
-  //           </div>
-
-  //           <div>
-  //             <Link href={`/profile/${post.postedBy._id}`}>
-  //               <div className="flex flex-col gap-2">
-  //                 <p className="flex items-center gap-2 md:text-md font-bold text-primary">
-  //                   {post.postedBy.userName}{" "}
-  //                   <VscVerifiedFilled className=" text-blue-500 text-md" />
-  //                 </p>
-  //               </div>
-  //             </Link>
-  //           </div>
-  //         </div>
-
-  //         <p className=" text-lg text-gray-700 px-8">{post.caption}</p>
-
-  //         <div className=" mt-5 px-10">
-  //           {userProfile && (
-  //             <div className=" flex items-center justify-between">
-  //               <LikeButton
-  //                 likes={post.likes}
-  //                 handleLike={() => handleLike(true)}
-  //                 handleDislike={() => handleLike(false)}
-  //               />
-  //               <LiaCommentDots className=" text-3xl" />
-  //             </div>
-  //           )}
-  //         </div>
-
-  //         <div></div>
-  //         <CommentButton
-  //           comment={comment}
-  //           setComment={setComment}
-  //           isPostingComment={isPostingcomment}
-  //           addComment={addComment}
-  //           comments={post.comments}
-  //         />
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
-
   return (
     <>
       {post && (
-        <div className="flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap">
-          <div className="relative flex-2 w-[1000px] lg:w-9/12 flex justify-center mt-10 sm:mt-0 items-center bg-blurred-img bg-no-repeat bg-cover bg-center">
-            <div className="opacity-90 absolute top-1 left-2 lg:left-6 flex gap-6 z-50">
-              <p className="cursor-pointer " onClick={() => router.back()}>
-                <MdOutlineCancel className="text-black text-[35px] hover:opacity-90" />
-              </p>
+        <div className=" lg:min-h-screen w-full flex flex-col lg:flex-row bg-gray-800">
+          {/* left */}
+          <div className="h-[480px] w-full lg:flex-1 lg:h-screen bg-img-blur bg-no-repeat bg-cover object-cover">
+            <div
+              onClick={() => router.back()}
+              title="back"
+              className="absolute z-50 flex items-center justify-center text-white bg-[#7e7b7b5e] w-9 h-9 rounded-full top-2 left-4 cursor-pointer hover:bg-[#5c59595e]"
+            >
+              <RxCross2 size={23} />
             </div>
-            <div className="relative">
-              <div className="lg:h-[100vh] h-[60vh]">
-                <video
-                  ref={videoRef}
-                  onClick={onVideoClick}
-                  loop
-                  src={post?.video?.asset.url}
-                  className=" h-full cursor-pointer"
-                ></video>
-              </div>
 
-              <div className="absolute top-[45%] left-[40%]  cursor-pointer">
-                {!playing && (
-                  <button onClick={onVideoClick}>
-                    <BsFillPlayFill className="text-white text-6xl lg:text-8xl" />
-                  </button>
-                )}
-              </div>
-            </div>
-            <div className="absolute bottom-5 lg:bottom-10 right-5 lg:right-10  cursor-pointer">
-              {isVideoMuted ? (
-                <button onClick={() => setIsVideoMuted(false)}>
-                  <HiVolumeOff className="text-white text-3xl lg:text-4xl" />
-                </button>
-              ) : (
-                <button onClick={() => setIsVideoMuted(true)}>
-                  <HiVolumeUp className="text-white text-3xl lg:text-4xl" />
-                </button>
-              )}
+            <div className="relative bg-black h-full max-w-[270px] lg:max-w-[390px] flex items- justify-center mx-auto cursor-pointer">
+              <video
+                autoPlay
+                loop
+                controls
+                src={post?.video?.asset.url}
+                className=" w-full h-full"
+              />
             </div>
           </div>
-          <div className="relative w-[1000px] md:w-[900px] lg:w-[700px]">
-            <div className="lg:mt-20 mt-10">
+
+          {/* right */}
+          <div className="relative bg-white flex flex-col w-full max-w-3xl mx-auto pt-2 lg:pt-0 lg:w-[500px] h-auto lg:h-screen border-t lg:border-l dark:border-t-darkBorder lg:dark:border-l-darkBorder">
+            <div className="mt-5">
               <Link href={`/profile/${post.postedBy._id}`}>
-                <div className="flex gap-4 mb-4 bg-white w-full pl-10 cursor-pointer">
+                <div className="flex gap-4 mb-4 w-full pl-10 cursor-pointer">
                   <Image
                     width={60}
                     height={60}
@@ -252,6 +125,7 @@ const Detail = ({ postDetails }: Props) => {
                 comment={comment}
                 setComment={setComment}
                 addComment={addComment}
+                // @ts-ignore
                 comments={post.comments}
                 isPostingComment={isPostingcomment}
               />

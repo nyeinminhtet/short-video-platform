@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
@@ -9,20 +9,22 @@ import { IoMdAdd } from "react-icons/io";
 import Logo from "@/utils/tiktik-logo.png";
 import { createOrGetUser } from "@/utils";
 import useAuthStore from "@/store/authStore";
+import { IoSearchOutline } from "react-icons/io5";
 
 const Navbar = () => {
   const { userProfile, addUser, removeUser } = useAuthStore();
-  const [searchValue, setSearchValue] = useState("");
   const router = useRouter();
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const handleSearch = (e: React.FormEvent) => {
+  function handleSearch(e: FormEvent) {
     e.preventDefault();
 
-    if (searchValue) {
-      router.push(`/search/${searchValue}`);
-    }
-    setSearchValue("");
-  };
+    const searchTerm = searchInputRef.current?.value!.trim();
+
+    if (!searchTerm) return;
+
+    router.push(`/search/${searchTerm}`);
+  }
 
   return (
     <div className="w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4">
@@ -39,26 +41,26 @@ const Navbar = () => {
 
       <div className=" relative hidden md:block">
         <form
-          className=" absolute md:static top-10 -left-20 bg-white"
           onSubmit={handleSearch}
+          className="hidden md:flex justify-between items-center dark:text-white bg-gray-100 dark:bg-darkSecondary rounded-full overflow-hidden border dark:border-transparent focus-within:border-gray-300 dark:focus-within:border-gray-500 focus-within:bg-gray-200 dark:focus-within:bg-darkSecondary"
         >
           <input
+            ref={searchInputRef}
             type="text"
-            placeholder="Search account and videos"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            className=" bg-primary p-3 md:text-md font-medium border-2 border-gray-100 focus:outline-none focus:border-2 focus:border-gray-300 w-[300px] md:w-[350px] rounded-full md:top-0"
+            placeholder="Search accounts and videos"
+            className="peer flex-1 w-full p-2 pl-4 border-none outline-none bg-transparent dark:placeholder-gray-500"
           />
+
           <button
-            onClick={handleSearch}
-            className=" absolute md:right-5 right-6 top-4 border-l-2 border-gray-300 pl-4 text-2xl text-gray-400 hover:text-gray-600"
+            type="submit"
+            className="w-11 h-10 flex items-center justify-center border-l text-gray-400 border-l-gray-200 dark:border-l-gray-500 peer-focus:border-l-gray-300 dark:peer-focus:border-l-gray-500 cursor-pointer"
           >
-            <BiSearch />
+            <IoSearchOutline size={23} />
           </button>
         </form>
       </div>
 
-      <div>
+      <div className=" flex justify-center">
         {userProfile ? (
           <div className="flex gap-5 md:gap-10">
             <Link href="/upload">
@@ -68,17 +70,15 @@ const Navbar = () => {
               </button>
             </Link>
             {userProfile.image && (
-              <Link href="">
-                <>
-                  <Image
-                    width={30}
-                    height={30}
-                    alt="profile"
-                    src={userProfile.image}
-                    className=" rounded-full cursor-pointer"
-                  />
-                </>
-              </Link>
+              <>
+                <Image
+                  width={30}
+                  height={30}
+                  alt="profile"
+                  src={userProfile.image}
+                  className=" rounded-full cursor-pointer"
+                />
+              </>
             )}
 
             <button
