@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import useAuthStore from "@/store/authStore";
 import { useRouter } from "next/router";
-import VideoCard from "@/components/videos/VideoCard";
+import VideoCard from "@/components/VideoCard";
 import NoResult from "@/components/NoResult";
 import { IUser, Video } from "@/types";
 import { VscVerifiedFilled } from "react-icons/vsc";
