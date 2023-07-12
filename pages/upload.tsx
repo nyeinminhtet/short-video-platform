@@ -11,6 +11,7 @@ import { topics } from "@/utils/constants";
 import { config } from "@/config/config";
 import { ImCancelCircle } from "react-icons/im";
 import Layout from "@/components/Layout";
+import Head from "next/head";
 
 const Upload = () => {
   const [isloading, setIsLoading] = useState(false);
@@ -29,6 +30,7 @@ const Upload = () => {
   const uploadVideo = async (e: any) => {
     const selectedFile = e.target.files[0];
     const fileTypes = ["video/mp4", "video/webm", "video/ogg"];
+    setIsLoading(true);
 
     if (fileTypes.includes(selectedFile.type)) {
       setWrongFileType(false);
@@ -84,7 +86,15 @@ const Upload = () => {
 
   return (
     <Layout>
-      <div className="flex w-full border-t-2 h-full absolute left-0 top-[40px] sm:top-[60px] mb-10 pt-10 lg:pt-20 bg-white justify-center">
+      <Head>
+        <title>Upload | Tik Tok</title>
+        <meta
+          property="og:url"
+          content="https://short-video-platform.vercel.app/upload"
+        ></meta>
+      </Head>
+
+      {/* <div className="flex w-full border-t-2 h-full absolute left-0 top-0 sm:top-[60px] mb-10 pt-10 lg:pt-20 bg-white justify-center">
         <div
           className=" absolute top-6 left-5 text-2xl"
           onClick={() => router.back()}
@@ -99,7 +109,7 @@ const Upload = () => {
                 Post a video to your account
               </p>
             </div>
-            <div className=" mt-2 border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center  outline-none w-[260px] h-[458px] p-10 cursor-pointer hover:border-red-300 hover:bg-gray-100">
+            <div className=" mt-2 border-dashed rounded-xl border-4 border-gray-200 flex flex-col-reverse justify-center items-center  outline-none w-[260px] h-[458px] p-10 cursor-pointer hover:border-red-300 hover:bg-gray-100">
               {isloading ? (
                 <p className="text-center text-3xl text-red-400 font-semibold">
                   Uploading...
@@ -207,6 +217,134 @@ const Upload = () => {
                 {savingPost ? "Posting..." : "Post"}
               </button>
             </div>
+          </div>
+        </div>
+      </div> */}
+
+      <div className="w-full h-[calc(100vh-97px)] overflow-hidden overflow-y-auto text-gray-600 dark:text-gray-200">
+        <div className="border shadow-sm max-w-4xl mx-auto p-4 xs:p-6 rounded-lg mb-10 xs:mb-0 overflow-hidden">
+          <div className="mb-8 text-center">
+            <h2 className="text-2xl font-bold">Upload video</h2>
+            <p className="text-[rgba(22,24,35,0.5)">
+              Post a video to your account
+            </p>
+          </div>
+
+          <div className="flex flex-col-reverse md:flex-row items-center">
+            {/* left */}
+            <label
+              htmlFor="video"
+              className={`${isloading ? "bg-gray-100" : ""} ${
+                videoAsset ? "p-0 bg-black border-none" : "p-4"
+              } flex flex-col items-center justify-center w-[260px] h-[458px] rounded-lg border-2 border-dashed border-gray-300 hover:border-primary text-gray-500 cursor-pointer transition-all`}
+            >
+              {videoAsset ? (
+                <video
+                  src={videoAsset.url}
+                  autoPlay
+                  controls
+                  loop
+                  muted
+                  className="video h-full w-full object-center"
+                />
+              ) : isloading ? (
+                <>
+                  <div className="border-2 border-l-primary animate-spin w-12 h-12 rounded-full" />
+                  <h3 className="mt-4 text-lg animate-pulse tracking-wide">
+                    Uploading...
+                  </h3>
+                </>
+              ) : (
+                <>
+                  <div className="flex justify-center text-gray-300">
+                    <FaCloudUploadAlt size={45} />
+                  </div>
+                  <h3 className="font-semibold text-lg mb-6 text-black ">
+                    Select video to upload
+                  </h3>
+                  <p className="mb-2 text-sm">MP4 or WebM</p>
+                  <p className="mb-2 text-sm">720x1280 resolution or higher</p>
+                  <p className="mb-2 text-sm">Up to 30 minutes</p>
+                  <p className="mb-6 text-sm">Less than 10 MB</p>
+                  <p className="btn-primary w-4/5 bg-primary rounded-lg py-2 text-center">
+                    Select file
+                  </p>
+                  <input
+                    id="video"
+                    type="file"
+                    accept="video/mp4, video/webm"
+                    className="w-0 h-0"
+                    onChange={(e) => uploadVideo(e)}
+                  />
+                </>
+              )}
+            </label>
+
+            {/* right */}
+            <div className="flex-1 md:pl-8 w-full mb-10 md:mb-0">
+              <label htmlFor="caption" className="block mb-2 font-semibold">
+                Caption
+              </label>
+              <input
+                value={caption}
+                onChange={(e) => setCaption(e.target.value)}
+                type="text"
+                autoComplete="off"
+                id="caption"
+                className="block border shadow-md outline-none w-full rounded-lg py-2 px-3 dark:bg-transparent dark:border-darkBorder"
+              />
+
+              <p className="mb-2 mt-6 font-semibold">Choose a topic</p>
+              <select
+                onChange={(e) => {
+                  setTopic(e.target.value);
+                }}
+                className="outline-none shadow-md lg:w-350 border-2 border-gray-200 text-md capitalize lg:p-4 p-2 rounded-lg cursor-pointer"
+              >
+                {topics.map((item) => (
+                  <option key={item.name} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+
+              <div className="mt-12 hidden md:flex items-center justify-center gap-4">
+                <button
+                  onClick={handleDiscard}
+                  disabled={savingPost || (!caption && !videoAsset)}
+                  className="border-gray-300 border-2 text-md font-medium p-2 rounded w-28 lg:w-44 outline-none  py-2  disabled:cursor-not-allowed"
+                >
+                  Discard
+                </button>
+
+                <button
+                  onClick={handlePost}
+                  className="bg-gray-400 text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none py-2 disabled:cursor-not-allowed disabled:bg-gray-200  disabled:text-gray-400 "
+                  disabled={!caption || !videoAsset || savingPost}
+                >
+                  {savingPost ? "Posting..." : "Post"}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* mobile layout */}
+          <div className="mt-10 xs:mt-12 flex md:hidden items-center justify-center gap-4">
+            <button
+              onClick={handleDiscard}
+              disabled={savingPost || !caption || !videoAsset}
+              className="border-gray-300 border-2 text-md font-medium p-2 rounded w-28 lg:w-44 outline-none py-2 disabled:cursor-not-allowed"
+            >
+              Discard
+            </button>
+
+            <button
+              onClick={handlePost}
+              className="bg-gray-400 text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none py-2 disabled:cursor-not-allowed disabled:bg-gray-200  disabled:text-gray-400 "
+              disabled={!caption || !videoAsset || savingPost}
+            >
+              {savingPost ? "Posting..." : "Post"}
+            </button>
           </div>
         </div>
       </div>

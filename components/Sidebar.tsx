@@ -25,7 +25,7 @@ const Sidebar = () => {
     "flex items-center -ml-1 gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold text-[#F51997] rounded";
 
   return (
-    <div>
+    <div className=" overflow-scroll h-full">
       {showMobileSearchBar && (
         <MobileSearchBarModal onClose={() => setShowMobileSearchBar(false)} />
       )}
@@ -36,7 +36,7 @@ const Sidebar = () => {
         {showSidebar ? <ImCancelCircle /> : <AiOutlineMenu />}
       </div>
       {showSidebar && (
-        <div className="xl:w-400 w-20 flex flex-col justify-start mb-2 border-r-2 border-gray-100 xl:border-0 p-3">
+        <div className="xl:w-400 w-20  flex flex-col justify-start mb-2 border-r-2  border-gray-100 xl:border-0 p-3">
           <div className="xl:border-b-2 border-gray-200 xl:pb-4">
             <Link href="/">
               <div

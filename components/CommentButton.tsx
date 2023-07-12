@@ -77,7 +77,7 @@ const CommentButton = ({
         </div>
 
         {userProfile && (
-          <div className="w-full p-4 lg:px-6 py-10 border-t dark:border-t-darkBorder">
+          <div className="w-full  p-4 lg:px-6 py-10 border-t ">
             <form className="w-full flex items-center" onSubmit={addComment}>
               <input
                 type="text"
