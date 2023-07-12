@@ -6,10 +6,10 @@ import { useRouter } from "next/router";
 import { AiOutlineLogout } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
-import Logo from "@/utils/tiktik-logo.png";
 import { createOrGetUser } from "@/utils";
 import useAuthStore from "@/store/authStore";
 import { IoSearchOutline } from "react-icons/io5";
+import LogoLight from "@/utils/LogoLight";
 
 const Navbar = () => {
   const { userProfile, addUser, removeUser } = useAuthStore();
@@ -30,12 +30,7 @@ const Navbar = () => {
     <div className="w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4">
       <Link href="/">
         <div className="w-[90px] sm:w-[130px]">
-          <Image
-            className=" cursor-pointer"
-            layout="responsive"
-            alt="TikTik"
-            src={Logo}
-          />
+          <LogoLight />
         </div>
       </Link>
 

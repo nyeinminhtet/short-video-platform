@@ -25,7 +25,7 @@ export default function Layout({ children }: Props) {
           {showSideBar && <Sidebar />}
         </div>
 
-        <div className="mt-4 flex flex-col gap-10 overflow-auto h-[88vh] videos flex-1">
+        <div className="mt-4 -ml-10 sm:ml-auto flex flex-col gap-10 overflow-auto h-[88vh] videos flex-1">
           {children}
         </div>
       </main>

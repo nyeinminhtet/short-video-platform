@@ -83,36 +83,11 @@ const VideoCard: NextPage<Props> = ({
     }
   }, [isVideoMuted]);
 
-  if (!isShowingOnHome) {
-    return (
-      <div>
-        <Link href={`/detail/${_id}`}>
-          <video
-            loop
-            src={video.asset.url}
-            className="w-[250px] md:w-full rounded-xl cursor-pointer"
-          ></video>
-        </Link>
-        <div className="flex gap-2 -mt-8 items-center ml-4">
-          <p className="text-white text-lg font-medium flex gap-1 items-center">
-            <BsPlay className="text-2xl" />
-            {likes?.length || 0}
-          </p>
-        </div>
-        <Link href={`/detail/${_id}`}>
-          <p className="mt-5 text-md text-gray-800 cursor-pointer w-210">
-            {caption}
-          </p>
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
       <div>
-        <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded">
-          <div className="md:w-16 md:h-16 w-10 h-10">
+        <div className="flex gap-1 p-2 cursor-pointer font-semibold rounded">
+          <div className="md:w-13 md:h-13 w-10 h-10">
             <Link href={`/profile/${postedBy._id}`}>
               <>
                 <Image
@@ -142,10 +117,10 @@ const VideoCard: NextPage<Props> = ({
         </div>
       </div>
 
-      <div className=" font-semibold text-md mb-3 ml-10">{caption}</div>
+      <div className=" font-semibold text-md mb-3 ml-5">{caption}</div>
 
       <div className="flex w-full xs:ml-[60px] h-[470px] xs:h-[480px] ">
-        <div className=" rounded-3xl">
+        <div className=" group relative rounded-3xl">
           <Link
             href={`/detail/${_id}`}
             className="group relative rounded-lg h-full w-full max-w-[270px] bg-black flex items-center overflow-hidden cursor-pointer"
@@ -158,28 +133,27 @@ const VideoCard: NextPage<Props> = ({
               src={video.asset.url}
               className="video w-full object-cover object-center"
             />
-
-            <div className=" absolute flex md:hidden group-hover:flex justify-between items-center left-0 right-0 bottom-5 xs:bottom-7 px-4 text-white">
-              {playing ? (
-                <button onClick={onVideoPres}>
-                  <BsFillPauseFill className="text-3xl text-white lg:text-[3rem]" />
-                </button>
-              ) : (
-                <button onClick={onVideoPres}>
-                  <BsFillPlayFill className=" text-3xl text-white lg:text-[3rem]" />
-                </button>
-              )}
-              {isVideoMuted ? (
-                <button onClick={() => setIsVideoMuted(false)}>
-                  <HiVolumeOff className="text-2xl text-white lg:text-3xl" />
-                </button>
-              ) : (
-                <button onClick={() => setIsVideoMuted(true)}>
-                  <HiVolumeUp className="text-2xl text-white lg:text-3xl" />
-                </button>
-              )}
-            </div>
           </Link>
+          <div className=" absolute flex md:hidden group-hover:flex justify-between items-center left-0 right-0 bottom-5 xs:bottom-7 px-4 text-white">
+            {playing ? (
+              <button onClick={onVideoPres}>
+                <BsFillPauseFill className="text-3xl text-white lg:text-[3rem]" />
+              </button>
+            ) : (
+              <button onClick={onVideoPres}>
+                <BsFillPlayFill className=" text-3xl text-white lg:text-[3rem]" />
+              </button>
+            )}
+            {isVideoMuted ? (
+              <button onClick={() => setIsVideoMuted(false)}>
+                <HiVolumeOff className="text-2xl text-white lg:text-3xl" />
+              </button>
+            ) : (
+              <button onClick={() => setIsVideoMuted(true)}>
+                <HiVolumeUp className="text-2xl text-white lg:text-3xl" />
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
