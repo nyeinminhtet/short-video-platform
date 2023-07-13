@@ -1,6 +1,4 @@
 import { IUser, Video } from "@/types";
-import { Dispatch, SetStateAction } from "react";
-import { NextPage } from "next";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,22 +6,25 @@ import { HiVolumeUp, HiVolumeOff } from "react-icons/hi";
 import { BsPlay, BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
 import { VscVerifiedFilled } from "react-icons/vsc";
 import { useRouter } from "next/router";
+import LikeButton from "./LikeButton";
+import useAuthStore from "@/store/authStore";
+import { config } from "@/config/config";
+import axios from "axios";
+import { BiCommentDots } from "react-icons/bi";
 
 interface Props {
   post: Video;
-
   isShowingOnHome?: boolean;
 }
 
-const VideoCard: NextPage<Props> = ({
-  post: { caption, postedBy, video, _id, likes },
-
-  isShowingOnHome,
-}) => {
+const VideoCard = ({ post }: Props) => {
   //state
   const [playing, setPlaying] = useState(true);
+  const { caption, postedBy, video, _id, likes } = post;
   const [isVideoMuted, setIsVideoMuted] = useState(true);
+  const [postDetail, setPostDetail] = useState(post);
 
+  const { userProfile }: any = useAuthStore();
   //hooks
   const router = useRouter();
 
@@ -76,6 +77,18 @@ const VideoCard: NextPage<Props> = ({
       }
     };
   }, []);
+
+  const handleLike = async (like: boolean) => {
+    if (userProfile) {
+      const { data } = await axios.put(`${config.apiUrl}/api/like`, {
+        userId: userProfile._id,
+        postId: postDetail._id,
+        like,
+      });
+
+      setPostDetail({ ...postDetail, likes: data.likes });
+    }
+  };
 
   useEffect(() => {
     if (videoRef.current) {
@@ -153,6 +166,19 @@ const VideoCard: NextPage<Props> = ({
                 <HiVolumeUp className="text-2xl text-white lg:text-3xl" />
               </button>
             )}
+          </div>
+          <div className=" absolute right-0 flex flex-col justify-between items-center bottom-[30%] ">
+            {userProfile && (
+              <LikeButton
+                likes={postDetail.likes}
+                handleLike={() => handleLike(true)}
+                handleDislike={() => handleLike(false)}
+              />
+            )}
+
+            <Link href={`/detail/${_id}`} className=" mt-5 text-white">
+              <BiCommentDots className=" text-3xl" />
+            </Link>
           </div>
         </div>
       </div>

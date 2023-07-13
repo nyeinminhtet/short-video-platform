@@ -51,7 +51,7 @@ const Profile = ({ data }: Props) => {
       </Head>
 
       <div className=" w-full">
-        <div className=" flex gap-6 md:gap-10 mb-4 bg-white w-full md:ml-0">
+        <div className=" flex gap-6 md:gap-10 mb-4 bg-white w-full ml-7 md:ml-0">
           <div className=" w-10 md:w-32 h-16 md:h-32">
             <Image
               width={80}

@@ -24,24 +24,26 @@ const LikeButton = ({ handleDislike, handleLike, likes }: Props) => {
 
   return (
     <div className=" flex gap-6">
-      <div className=" mt-4 flex flex-col justify-center items-center cursor-pointer">
+      <div className=" mt-2 flex flex-col justify-center items-center cursor-pointer">
         {alreadyLiked ? (
-          <div className=" bg-primary rounded-full p-2 md:p-4 text-[#F51997]">
+          <div className=" p-2 md:p-4 text-red-500">
             <MdFavorite
-              className=" text-lg md:text-2xl"
+              className=" text-3xl md:text-4xl"
               onClick={handleDislike}
             />
           </div>
         ) : (
-          <div className=" bg-primary rounded-full p-2 md:p-4">
+          <div className=" text-white p-2 md:p-4">
             <AiOutlineHeart
-              className=" text-lg md:text-2xl"
+              className=" text-3xl md:text-4xl"
               onClick={handleLike}
             />
           </div>
         )}
 
-        <p className=" text-md font-semibold">{likes?.length || 0}</p>
+        <p className=" text-lg -mt-3 font-semibold text-red-500">
+          {likes?.length || 0}
+        </p>
       </div>
     </div>
   );

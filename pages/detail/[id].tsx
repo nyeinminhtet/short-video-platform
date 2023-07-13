@@ -3,18 +3,16 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 import { VscVerifiedFilled } from "react-icons/vsc";
-import { MdOutlineCancel } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
-import { BsFillPlayFill } from "react-icons/bs";
-import { HiVolumeOff, HiVolumeUp } from "react-icons/hi";
+
 import axios from "axios";
 import { config } from "@/config/config";
 import { Video } from "@/types";
 import useAuthStore from "@/store/authStore";
 import LikeButton from "@/components/LikeButton";
 import CommentButton from "@/components/CommentButton";
-import { LiaCommentDots } from "react-icons/lia";
 import Head from "next/head";
+import { BiCommentDots } from "react-icons/bi";
 
 interface Props {
   postDetails: Video;
@@ -124,7 +122,7 @@ const Detail = ({ postDetails }: Props) => {
                 <div className="px-10">
                   <p className=" text-md text-gray-600">{post.caption}</p>
                 </div>
-                <div className="mt-10 px-10">
+                <div className="mt-5 px-10 flex justify-between items-center">
                   {userProfile && (
                     <LikeButton
                       likes={post.likes}
@@ -132,7 +130,11 @@ const Detail = ({ postDetails }: Props) => {
                       handleDislike={() => handleLike(false)}
                     />
                   )}
+                  <Link href="#comment">
+                    <BiCommentDots className=" text-3xl" />
+                  </Link>
                 </div>
+
                 <CommentButton
                   comment={comment}
                   setComment={setComment}

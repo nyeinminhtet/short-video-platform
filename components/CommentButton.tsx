@@ -31,7 +31,10 @@ const CommentButton = ({
   const { userProfile, allUsers } = useAuthStore();
 
   return (
-    <div className=" flex flex-col w-full max-w-3xl mx-auto pt-2 lg:pt-0 lg:w-[500px] h-auto lg:h-screen border-t lg:border-l  lg:border-l-gray-300">
+    <div
+      id="comment"
+      className=" flex flex-col w-full max-w-3xl mx-auto pt-2 lg:pt-0 lg:w-[500px] h-auto lg:h-screen border-t lg:border-l  lg:border-l-gray-300"
+    >
       <div>
         <div className=" flex-1 max-h-[300px] lg:max-h-[400px] p-4 lg:p-6 overflow-hidden overflow-y-auto">
           {comments?.length ? (
@@ -78,7 +81,10 @@ const CommentButton = ({
 
         {userProfile && (
           <div className="w-full  p-4 lg:px-6 py-10 border-t ">
-            <form className="w-full flex items-center" onSubmit={addComment}>
+            <form
+              className="w-full -mt-5 flex items-center"
+              onSubmit={addComment}
+            >
               <input
                 type="text"
                 value={comment}

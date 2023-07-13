@@ -221,8 +221,8 @@ const Upload = () => {
         </div>
       </div> */}
 
-      <div className="w-full h-[calc(100vh-97px)] overflow-hidden overflow-y-auto text-gray-600 dark:text-gray-200">
-        <div className="border shadow-sm max-w-4xl mx-auto p-4 xs:p-6 rounded-lg mb-10 xs:mb-0 overflow-hidden">
+      <div className="w-full h-[calc(100vh-97px) overflow-hidden overflow-y-auto m-auto">
+        <div className="border shadow-sm max-w-4xl ml-4 p-4 xs:p-6 rounded-lg mb-10 xs:mb-0 overflow-hidden">
           <div className="mb-8 text-center">
             <h2 className="text-2xl font-bold">Upload video</h2>
             <p className="text-[rgba(22,24,35,0.5)">
@@ -281,7 +281,7 @@ const Upload = () => {
             </label>
 
             {/* right */}
-            <div className="flex-1 md:pl-8 w-full mb-10 md:mb-0">
+            <div className="flex-1 md:pl-8 ml-6 w-full mb-10 md:mb-0">
               <label htmlFor="caption" className="block mb-2 font-semibold">
                 Caption
               </label>
