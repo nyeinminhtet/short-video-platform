@@ -1,5 +1,5 @@
 import { IUser, Video } from "@/types";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { HiVolumeUp, HiVolumeOff } from "react-icons/hi";
@@ -12,23 +12,43 @@ import { config } from "@/config/config";
 import axios from "axios";
 import { BiCommentDots } from "react-icons/bi";
 import NotLoginModal from "./modal/NotLoginModal";
+import ShowFollowOrDelete from "./ShowFollowOrDelete";
+import { ObjProps } from "@/hooks/useFollow";
 
 interface Props {
   post: Video;
-  isShowingOnHome?: boolean;
+  postedBy: IUser;
+  loadingFollow: boolean;
+  setAllPostedBy: Dispatch<SetStateAction<any>>;
+  handleFollow: (obj: ObjProps) => Promise<IUser[]>;
+  setCurrentUserId: Dispatch<SetStateAction<string>>;
 }
 
-const VideoCard = ({ post }: Props) => {
+const VideoCard = ({
+  post,
+  loadingFollow,
+  handleFollow,
+  setCurrentUserId,
+  setAllPostedBy,
+  postedBy,
+}: Props) => {
   //state
+  const { caption, video, _id, likes } = post;
+
   const [playing, setPlaying] = useState(true);
-  const { caption, postedBy, video, _id, likes } = post;
   const [isVideoMuted, setIsVideoMuted] = useState(true);
   const [postDetail, setPostDetail] = useState(post);
   const [showLogin, setShowLogin] = useState(false);
-
   const { userProfile }: any = useAuthStore();
-  //hooks
-  const router = useRouter();
+
+  // already follow
+  const isAlreadyFollow = postedBy?.follower?.some(
+    (user) => user._ref === userProfile?._id
+  );
+  console.log("postedBy", postedBy.follower);
+  useEffect(() => {
+    console.log(isAlreadyFollow, "hello");
+  }, [isAlreadyFollow]);
 
   //video ref
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -95,6 +115,32 @@ const VideoCard = ({ post }: Props) => {
     }
   };
 
+  const followHandler = async () => {
+    if (!userProfile) {
+      setShowLogin(true);
+      return;
+    }
+
+    setCurrentUserId(postedBy?._id);
+
+    const obj = {
+      userId: userProfile._id,
+      creatorId: postedBy?._id,
+      follow: isAlreadyFollow ? false : true,
+    };
+
+    const updatedUsers = await handleFollow(obj);
+
+    const creator = updatedUsers.find((u) => u._id === postedBy?._id)!;
+
+    setAllPostedBy((prev: IUser[]) => [
+      ...prev.map((user: IUser) =>
+        user._id === postedBy?._id
+          ? { ...user, follower: creator.follower }
+          : user
+      ),
+    ]);
+  };
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.muted = isVideoMuted;
@@ -110,8 +156,8 @@ const VideoCard = ({ post }: Props) => {
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
       {showLogin && <NotLoginModal onClose={() => setShowLogin(false)} />}
-      <div>
-        <div className="flex gap-1 p-2 cursor-pointer font-semibold rounded">
+      <header className=" flex items-center">
+        <div className="flex gap-1 p-2 cursor-pointer font-semibold rounded mr-10">
           <div className="md:w-13 md:h-13 w-10 h-10">
             <Link href={`/profile/${postedBy._id}`}>
               <>
@@ -129,7 +175,7 @@ const VideoCard = ({ post }: Props) => {
           <div>
             <Link href={`/profile/${postedBy._id}`}>
               <div className="flex items-center gap-2">
-                <p className="flex items-center gap-2 md:text-md font-bold text-primary">
+                <p className="flex items-center gap-0 md:text-md font-bold text-primary">
                   {postedBy.userName}{" "}
                   <VscVerifiedFilled className=" text-blue-500 text-md" />
                 </p>
@@ -140,7 +186,19 @@ const VideoCard = ({ post }: Props) => {
             </Link>
           </div>
         </div>
-      </div>
+
+        {/* follow */}
+        <div className=" -mt-3">
+          <ShowFollowOrDelete
+            isCreator={postedBy?._id === userProfile?._id}
+            //@ts-ignore
+            isAlreadyFollow={isAlreadyFollow}
+            followHandler={followHandler}
+            loadingFollow={loadingFollow}
+            userId={postedBy?._id}
+          />
+        </div>
+      </header>
 
       <div className=" font-semibold text-md mb-3 ml-5">{caption}</div>
 
