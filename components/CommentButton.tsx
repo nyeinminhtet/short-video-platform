@@ -28,7 +28,7 @@ const CommentButton = ({
   comments,
   isPostingComment,
 }: Props) => {
-  const { userProfile, allUsers } = useAuthStore();
+  const { allUsers } = useAuthStore();
 
   return (
     <div
@@ -79,28 +79,26 @@ const CommentButton = ({
           )}
         </div>
 
-        {userProfile && (
-          <div className="w-full  p-4 lg:px-6 py-10 border-t ">
-            <form
-              className="w-full -mt-5 flex items-center"
-              onSubmit={addComment}
+        <div className="w-full  p-4 lg:px-6 py-10 border-t ">
+          <form
+            className="w-full -mt-5 flex items-center"
+            onSubmit={addComment}
+          >
+            <input
+              type="text"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder={`Add comment`}
+              className=" flex-1 min-w-0 bg-gray-200 dark:bg-darkSecondary border-none outline-none p-2 pl-4 rounded-lg caret-primary"
+            />
+            <button
+              className=" py-2 pl-3 disabled:text-gray-400 dark:disabled:text-gray-600 text-primary font-semibold disabled:cursor-not-allowed"
+              onClick={addComment}
             >
-              <input
-                type="text"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder={`Add comment as ${userProfile.userName}`}
-                className=" flex-1 min-w-0 bg-gray-200 dark:bg-darkSecondary border-none outline-none p-2 pl-4 rounded-lg caret-primary"
-              />
-              <button
-                className=" py-2 pl-3 disabled:text-gray-400 dark:disabled:text-gray-600 text-primary font-semibold disabled:cursor-not-allowed"
-                onClick={addComment}
-              >
-                {isPostingComment ? "Commenting..." : "Comment"}
-              </button>
-            </form>
-          </div>
-        )}
+              {isPostingComment ? "Commenting..." : "Comment"}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

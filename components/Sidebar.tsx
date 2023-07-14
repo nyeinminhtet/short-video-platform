@@ -7,7 +7,7 @@ import { ImCancelCircle } from "react-icons/im";
 import Discover from "./Discover";
 import SuggestedAccount from "./SuggestedAccount";
 import Footer from "./Footer";
-import MobileSearchBarModal from "./model/MobileSearchBarModal";
+import MobileSearchBarModal from "./modal/MobileSearchBarModal";
 import { IoSearchOutline } from "react-icons/io5";
 
 const Sidebar = () => {

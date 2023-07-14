@@ -13,6 +13,7 @@ import LikeButton from "@/components/LikeButton";
 import CommentButton from "@/components/CommentButton";
 import Head from "next/head";
 import { BiCommentDots } from "react-icons/bi";
+import NotLoginModal from "@/components/modal/NotLoginModal";
 
 interface Props {
   postDetails: Video;
@@ -24,24 +25,27 @@ const Detail = ({ postDetails }: Props) => {
   const { userProfile }: any = useAuthStore();
   const [comment, setComment] = useState("");
   const [isPostingcomment, setIsPostingcomment] = useState(false);
-
-  useEffect(() => window.scrollTo(0, 0), []);
+  const [showLogin, setShowLogin] = useState(false);
 
   const handleLike = async (like: boolean) => {
+    if (!userProfile) {
+      return setShowLogin(true);
+    }
     if (userProfile) {
       const { data } = await axios.put(`${config.apiUrl}/api/like`, {
         userId: userProfile._id,
         postId: post._id,
         like,
       });
-
       setPost({ ...post, likes: data.likes });
     }
   };
 
   const addComment = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    if (!userProfile) {
+      return setShowLogin(true);
+    }
     if (userProfile && comment) {
       setIsPostingcomment(true);
 
@@ -57,6 +61,12 @@ const Detail = ({ postDetails }: Props) => {
       setIsPostingcomment(false);
     }
   };
+
+  useEffect(() => {
+    if (userProfile) {
+      setShowLogin(false);
+    }
+  }, [userProfile]);
 
   const TITLE = !postDetails
     ? "No video found"
@@ -100,6 +110,9 @@ const Detail = ({ postDetails }: Props) => {
 
             {/* right */}
             <div className="relative bg-white flex flex-col w-full max-w-3xl mx-auto pt-2 lg:pt-0 lg:w-[500px] h-auto lg:h-screen border-t lg:border-l dark:border-t-darkBorder lg:dark:border-l-darkBorder">
+              {showLogin && (
+                <NotLoginModal onClose={() => setShowLogin(false)} />
+              )}
               <div className="mt-5">
                 <Link href={`/profile/${post.postedBy._id}`}>
                   <div className="flex gap-4 mb-4 w-full pl-10 cursor-pointer">
@@ -123,13 +136,12 @@ const Detail = ({ postDetails }: Props) => {
                   <p className=" text-md text-gray-600">{post.caption}</p>
                 </div>
                 <div className="mt-5 px-10 flex justify-between items-center">
-                  {userProfile && (
-                    <LikeButton
-                      likes={post.likes}
-                      handleLike={() => handleLike(true)}
-                      handleDislike={() => handleLike(false)}
-                    />
-                  )}
+                  <LikeButton
+                    likes={post.likes}
+                    handleLike={() => handleLike(true)}
+                    handleDislike={() => handleLike(false)}
+                  />
+
                   <Link href="#comment">
                     <BiCommentDots className=" text-3xl" />
                   </Link>

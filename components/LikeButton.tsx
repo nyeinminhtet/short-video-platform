@@ -33,7 +33,7 @@ const LikeButton = ({ handleDislike, handleLike, likes }: Props) => {
             />
           </div>
         ) : (
-          <div className=" text-white p-2 md:p-4">
+          <div className=" text-black p-2 md:p-4">
             <AiOutlineHeart
               className=" text-3xl md:text-4xl"
               onClick={handleLike}

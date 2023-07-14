@@ -11,6 +11,7 @@ import useAuthStore from "@/store/authStore";
 import { config } from "@/config/config";
 import axios from "axios";
 import { BiCommentDots } from "react-icons/bi";
+import NotLoginModal from "./modal/NotLoginModal";
 
 interface Props {
   post: Video;
@@ -23,6 +24,7 @@ const VideoCard = ({ post }: Props) => {
   const { caption, postedBy, video, _id, likes } = post;
   const [isVideoMuted, setIsVideoMuted] = useState(true);
   const [postDetail, setPostDetail] = useState(post);
+  const [showLogin, setShowLogin] = useState(false);
 
   const { userProfile }: any = useAuthStore();
   //hooks
@@ -79,6 +81,9 @@ const VideoCard = ({ post }: Props) => {
   }, []);
 
   const handleLike = async (like: boolean) => {
+    if (!userProfile) {
+      return setShowLogin(true);
+    }
     if (userProfile) {
       const { data } = await axios.put(`${config.apiUrl}/api/like`, {
         userId: userProfile._id,
@@ -96,8 +101,15 @@ const VideoCard = ({ post }: Props) => {
     }
   }, [isVideoMuted]);
 
+  useEffect(() => {
+    if (userProfile) {
+      setShowLogin(false);
+    }
+  }, [userProfile]);
+
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
+      {showLogin && <NotLoginModal onClose={() => setShowLogin(false)} />}
       <div>
         <div className="flex gap-1 p-2 cursor-pointer font-semibold rounded">
           <div className="md:w-13 md:h-13 w-10 h-10">
@@ -168,13 +180,11 @@ const VideoCard = ({ post }: Props) => {
             )}
           </div>
           <div className=" absolute right-0 flex flex-col justify-between items-center bottom-[30%] ">
-            {userProfile && (
-              <LikeButton
-                likes={postDetail.likes}
-                handleLike={() => handleLike(true)}
-                handleDislike={() => handleLike(false)}
-              />
-            )}
+            <LikeButton
+              likes={postDetail.likes}
+              handleLike={() => handleLike(true)}
+              handleDislike={() => handleLike(false)}
+            />
 
             <Link href={`/detail/${_id}`} className=" mt-5 text-white">
               <BiCommentDots className=" text-3xl" />
