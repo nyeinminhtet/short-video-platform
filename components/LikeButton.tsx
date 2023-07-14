@@ -26,17 +26,19 @@ const LikeButton = ({ handleDislike, handleLike, likes }: Props) => {
     <div className=" flex gap-6">
       <div className=" mt-2 flex flex-col justify-center items-center cursor-pointer">
         {alreadyLiked ? (
-          <div className=" p-2 md:p-4 text-red-500">
+          <div className=" p-2 bg-gray-300 rounded-full w-full mb-2 h-full md:p-3 text-red-500">
             <MdFavorite
-              className=" text-3xl md:text-4xl"
+              //className=" text-3xl md:text-4xl"
               onClick={handleDislike}
+              size={25}
             />
           </div>
         ) : (
-          <div className=" text-black p-2 md:p-4">
+          <div className=" text-red-500 p-2 md:p-3 bg-gray-300 rounded-full w-full h-full mb-2">
             <AiOutlineHeart
-              className=" text-3xl md:text-4xl"
+              //  className=" text-3xl md:text-4xl"
               onClick={handleLike}
+              size={25}
             />
           </div>
         )}

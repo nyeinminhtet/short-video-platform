@@ -85,7 +85,7 @@ const VideoCard = ({ post }: Props) => {
       return setShowLogin(true);
     }
     if (userProfile) {
-      const { data } = await axios.put(`${config.apiUrl}/api/like`, {
+      const { data } = await axios.put(`${config.baseUrl}/api/like`, {
         userId: userProfile._id,
         postId: postDetail._id,
         like,
@@ -179,15 +179,18 @@ const VideoCard = ({ post }: Props) => {
               </button>
             )}
           </div>
-          <div className=" absolute right-0 flex flex-col justify-between items-center bottom-[30%] ">
+          <div className=" absolute right-0 flex flex-col justify-between items-center bottom-[20%] ">
             <LikeButton
               likes={postDetail.likes}
               handleLike={() => handleLike(true)}
               handleDislike={() => handleLike(false)}
             />
 
-            <Link href={`/detail/${_id}`} className=" mt-5 text-white">
-              <BiCommentDots className=" text-3xl" />
+            <Link
+              href={`/detail/${_id}`}
+              className=" mt-5 bg-gray-300  p-2 rounded-full text-gray-800"
+            >
+              <BiCommentDots size={30} />
             </Link>
           </div>
         </div>

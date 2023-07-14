@@ -32,7 +32,7 @@ const Detail = ({ postDetails }: Props) => {
       return setShowLogin(true);
     }
     if (userProfile) {
-      const { data } = await axios.put(`${config.apiUrl}/api/like`, {
+      const { data } = await axios.put(`${config.baseUrl}/api/like`, {
         userId: userProfile._id,
         postId: post._id,
         like,
@@ -50,7 +50,7 @@ const Detail = ({ postDetails }: Props) => {
       setIsPostingcomment(true);
 
       const { data } = await axios.put(
-        `${config.apiUrl}/api/post/${post._id}`,
+        `${config.baseUrl}/api/post/${post._id}`,
         {
           userId: userProfile._id,
           comment,
@@ -142,8 +142,11 @@ const Detail = ({ postDetails }: Props) => {
                     handleDislike={() => handleLike(false)}
                   />
 
-                  <Link href="#comment">
-                    <BiCommentDots className=" text-3xl" />
+                  <Link
+                    href="#comment"
+                    className=" bg-gray-300  p-2 rounded-full text-gray-800"
+                  >
+                    <BiCommentDots size={30} />
                   </Link>
                 </div>
 
@@ -169,7 +172,7 @@ export const getServerSideProps = async ({
 }: {
   params: { id: string };
 }) => {
-  const { data } = await axios.get(`${config.apiUrl}/api/post/${id}`);
+  const { data } = await axios.get(`${config.baseUrl}/api/post/${id}`);
 
   return {
     props: {
