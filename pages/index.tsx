@@ -43,7 +43,7 @@ export default function Home({ videos }: Props) {
           content="https://short-video-platform.vercel.app/"
         ></meta>
       </Head>
-      <div className="flex flex-col gap-10 sm:ml-20 ml-5 videos h-full">
+      <div className="flex flex-col gap-10 sm:ml-20 ml-8 videos h-full">
         {videos.length ? (
           videos?.map((video: Video, i) => (
             <VideoCard

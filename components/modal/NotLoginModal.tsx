@@ -38,22 +38,22 @@ export default function NotLoginModal({ onClose }: Props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden border dark:border-darkBorder rounded-2xl dark:text-white bg-white dark:bg-darkSecondary p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden border rounded-2xl dark:text-white bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-bold leading-5 border-b border-b-gray-200 dark:border-b-darkBorder pb-4"
+                    className="text-lg text-black font-bold leading-5 border-b border-b-gray-200  pb-4"
                   >
                     Login to TikTok
                   </Dialog.Title>
                   <div className="mt-6 flex-col items-center flex justify-center">
-                    <p className="tracking-wide mb-4 text-sm text-gray-500 dark:text-gray-300">
+                    <p className="tracking-wide mb-4 text-sm text-gray-500 ">
                       Continue with google
                     </p>
 
                     <div className="flex items-center gap-3">
                       <button
                         onClick={onClose}
-                        className="btn-secondary py-2 px-6"
+                        className=" font-semibold py-2 px-6"
                       >
                         Close
                       </button>

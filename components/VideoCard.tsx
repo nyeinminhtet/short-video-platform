@@ -45,10 +45,6 @@ const VideoCard = ({
   const isAlreadyFollow = postedBy?.follower?.some(
     (user) => user._ref === userProfile?._id
   );
-  console.log("postedBy", postedBy.follower);
-  useEffect(() => {
-    console.log(isAlreadyFollow, "hello");
-  }, [isAlreadyFollow]);
 
   //video ref
   const videoRef = useRef<HTMLVideoElement>(null);

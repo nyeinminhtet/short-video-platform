@@ -19,10 +19,10 @@ const Sidebar = () => {
   const router = useRouter();
 
   const activeLink =
-    "flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold text-[#F51997] rounded";
+    "flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold text-gray-600 rounded";
 
   const normalLink =
-    "flex items-center -ml-1 gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold text-[#F51997] rounded";
+    "flex items-center -ml-1 gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold text-gray-600 rounded";
 
   return (
     <div className=" overflow-scroll h-full">
