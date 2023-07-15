@@ -68,6 +68,8 @@ const Profile = ({ data }: Props) => {
     (user) => user._ref === currentUser?._id
   );
 
+  const isMe = user._id === currentUser?._id;
+
   const { loadingFollow, handleFollow } = useFollow();
 
   const totalLikes = userVideos?.reduce(
@@ -135,25 +137,27 @@ const Profile = ({ data }: Props) => {
             <p className=" capitalize md:text-xl text-gray-400 text-sm">
               {user.userName}
             </p>
-            <div className=" mt-2 md:mt-3">
-              {isAlreadyFollow ? (
-                <button
-                  onClick={followHandler}
-                  disabled={loadingFollow}
-                  className=" bg-primary h-10 rounded-md text-sm xs:text-base font-semibold w-28 xs:w-40"
-                >
-                  Following
-                </button>
-              ) : (
-                <button
-                  onClick={followHandler}
-                  disabled={loadingFollow}
-                  className="text-sm xs:text-base font-semibold w-28 h-10 text-white bg-red-500 hover:bg-red-600 rounded-md xs:w-40"
-                >
-                  Follow
-                </button>
-              )}
-            </div>
+            {!isMe && (
+              <div className=" mt-2 md:mt-3">
+                {isAlreadyFollow ? (
+                  <button
+                    onClick={followHandler}
+                    disabled={loadingFollow}
+                    className=" bg-primary h-10 rounded-md text-sm xs:text-base font-semibold w-28 xs:w-40"
+                  >
+                    Following
+                  </button>
+                ) : (
+                  <button
+                    onClick={followHandler}
+                    disabled={loadingFollow}
+                    className="text-sm xs:text-base font-semibold w-28 h-10 text-white bg-red-500 hover:bg-red-600 rounded-md xs:w-40"
+                  >
+                    Follow
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </div>
         <div className="text-sm mt-5 ml-7 flex flex-wrap gap-4 xs:gap-x-6 text-gray-600 dark:text-gray-300">

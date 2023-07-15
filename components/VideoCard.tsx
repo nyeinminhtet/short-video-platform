@@ -46,6 +46,9 @@ const VideoCard = ({
     (user) => user._ref === userProfile?._id
   );
 
+  // checkIsMe
+  const isMe = postedBy._id === userProfile?._id;
+
   //video ref
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -183,17 +186,19 @@ const VideoCard = ({
           </div>
         </div>
 
-        {/* follow */}
-        <div className=" -mt-3">
-          <ShowFollowOrDelete
-            isCreator={postedBy?._id === userProfile?._id}
-            //@ts-ignore
-            isAlreadyFollow={isAlreadyFollow}
-            followHandler={followHandler}
-            loadingFollow={loadingFollow}
-            userId={postedBy?._id}
-          />
-        </div>
+        {/* follow button */}
+        {!isMe && (
+          <div className=" -mt-3">
+            <ShowFollowOrDelete
+              isCreator={postedBy?._id === userProfile?._id}
+              //@ts-ignore
+              isAlreadyFollow={isAlreadyFollow}
+              followHandler={followHandler}
+              loadingFollow={loadingFollow}
+              userId={postedBy?._id}
+            />
+          </div>
+        )}
       </header>
 
       <div className=" font-semibold text-md mb-3 ml-5">{caption}</div>
@@ -246,6 +251,9 @@ const VideoCard = ({
             >
               <BiCommentDots size={30} />
             </Link>
+            <p className=" text-white font-semibold text-sm">
+              {post.comments?.length || 0}
+            </p>
           </div>
         </div>
       </div>
