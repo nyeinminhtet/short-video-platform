@@ -22,6 +22,7 @@ export default function Home({ videos }: Props) {
   const [allPostedBy, setAllPostedBy] = useState(
     videos.map((video) => video.postedBy)
   );
+
   const [currentUserId, setCurrentUserId] = useState("");
   const { loadingFollow, handleFollow } = useFollow();
 
@@ -76,7 +77,6 @@ export const getServerSideProps = async ({
   if (topic) {
     response = await axios.get(`${config.baseUrl}/api/discover/${topic}`);
   }
-
   return {
     props: {
       videos: response.data,

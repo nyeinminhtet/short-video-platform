@@ -42,9 +42,9 @@ const VideoCard = ({
   const { userProfile }: any = useAuthStore();
 
   // already follow
-  const isAlreadyFollow = postedBy?.follower?.some(
+  const isAlreadyFollow = postedBy.follower?.some(
     (user) => user._ref === userProfile?._id
-  );
+  )!;
 
   // checkIsMe
   const isMe = postedBy._id === userProfile?._id;
@@ -191,7 +191,6 @@ const VideoCard = ({
           <div className=" -mt-3">
             <ShowFollowOrDelete
               isCreator={postedBy?._id === userProfile?._id}
-              //@ts-ignore
               isAlreadyFollow={isAlreadyFollow}
               followHandler={followHandler}
               loadingFollow={loadingFollow}
